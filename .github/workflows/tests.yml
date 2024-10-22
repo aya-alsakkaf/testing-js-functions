@@ -8,7 +8,6 @@ on:
   pull_request:
     branches:
       - main
-
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -21,4 +20,4 @@ jobs:
       - run: npm test -- --ci --reporters=default --reporters=jest-junit
       - name: update Airtable
         if: always ()
-        run: node airtableScripts.js {{github.actor}} {{github.repository}}
+        run: node ../../airtableScript.js {{github.actor}} {{github.repository}}
