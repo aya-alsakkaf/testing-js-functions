@@ -1,12 +1,15 @@
 const axios = require("axios");
 const fs = require("fs");
+const { argv } = require("process");
 const { json } = require("stream/consumers");
 const dotenv = require("dotenv").config();
 const xml2js = require("xml2js");
 
-const AIRTABLE_API_KEY = process.env.AIRTABLE_API_KEY.AIRTABLE_API_KEY;
-const AIRTABLE_BASE_ID = process.env.AIRTABLE_API_KEY.AIRTABLE_BASE_ID;
-const AIRTABLE_TABLE_NAME = process.env.AIRTABLE_API_KEY.AIRTABLE_TABLE_NAME;
+const AIRTABLE_API_KEY = process.env.AIRTABLE_API_KEY || argv[2];
+const AIRTABLE_BASE_ID = process.env.AIRTABLE_BASE_ID || argv[3];
+const AIRTABLE_TABLE_NAME = process.env.AIRTABLE_TABLE_NAME || argv[4];
+const AIRTABLE_STUDENTS_TABLE_NAME =
+  process.env.AIRTABLE_STUDENTS_TABLE_NAME || argv[5];
 
 const jestReportPath = "./junit.xml"; // Adjust the path as needed
 const jestResults = fs.readFileSync(jestReportPath, "utf8");
@@ -14,7 +17,7 @@ const jestResults = fs.readFileSync(jestReportPath, "utf8");
 const fetchStudents = async () => {
   try {
     const response = await axios.get(
-      `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/${process.env.AIRTABLE_API_KEY.AIRTABLE_STUDENTS_TABLE_NAME}`,
+      `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/${AIRTABLE_STUDENTS_TABLE_NAME}`,
       {
         headers: {
           Authorization: `Bearer ${AIRTABLE_API_KEY}`,
@@ -52,7 +55,7 @@ xml2js.parseString(jestResults, async (err, result) => {
   let students = await fetchStudents();
 
   const oneStudent = students.find(
-    (student) => student.fields["GitHub Username"] === process.argv[2]
+    (student) => student.fields["GitHub Username"] === process.argv[6]
   );
 
   //   Uncomment the following code to update Airtable
@@ -64,7 +67,7 @@ xml2js.parseString(jestResults, async (err, result) => {
           Students: [oneStudent.id], // Replace with the actual student name
           Grade: grade / 100,
           Notes: `Passed Tests ${passedTests}, Failed Tested ${failedTests}`,
-          Repo: process.argv[3],
+          Repo: process.argv[7],
         },
       },
       {
