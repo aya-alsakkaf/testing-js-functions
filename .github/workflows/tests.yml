@@ -1,0 +1,16 @@
+name: Run Tests
+
+on:
+  push:
+    branches:
+      - "main"
+
+jobs:
+  test:
+    runs-on: ubuntu-latest;
+    steps:
+      - uses: actions/checkout@v2
+      - name: test
+        run: |
+          npm ci 
+            npm run test >> test-results.txt
