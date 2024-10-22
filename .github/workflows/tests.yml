@@ -13,4 +13,4 @@ jobs:
       - name: test
         run: |
           npm ci 
-            npm run test >> test-results.txt
+            npm run test
