@@ -21,4 +21,4 @@ jobs:
       - run: npm test -- --ci --reporters=default --reporters=jest-junit
       - name: update Airtable
         if: always ()
-        run: node airtableScript.js ${{secrets.AIRTABLE_API_KEY}} ${{secrets.AIRTABLE_BASE_ID}} ${{secrets.AIRTABLE_TABLE_NAME}} ${{secrets.AIRTABLE_STUDENTS_TABLE_NAME}}  ${{github.actor}} ${{github.repository}}
+        run: node airtableScript.js ${{secrets.AIRTABLE_API_KEY}} ${{secrets.AIRTABLE_BASE_ID}} ${{secrets.AIRTABLE_TABLE_NAME}} ${{secrets.AIRTABLE_STUDENTS_TABLE_NAME}}  ${{github.actor}} https://wwww.github.com/${{github.repository}}
