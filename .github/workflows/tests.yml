@@ -18,4 +18,7 @@ jobs:
         with:
           node-version: "16"
       - run: npm install
-      - run: npm test
+      - run: npm test -- --ci --reporters=default --reporters=jest-junit
+      - name: update Airtable
+        if: always ()
+        run: node airtableScripts.js {{github.actor}} {{github.repository}}
