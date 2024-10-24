@@ -6,9 +6,9 @@ const xml2js = require("xml2js");
 
 // Constants and configuration
 
-const STUDENT_GITHUB = argv[6] || "aya-alsakkaf";
-const STUDENT_REPO =
-  argv[7] || "https://github.com/aya-alsakkaf/testing-js-functions";
+const TOPIC = argv[2];
+const STUDENT_GITHUB = argv[3];
+const STUDENT_REPO = argv[4];
 const JEST_REPORT_PATH = "./junit.xml";
 
 // Airtable API functions
@@ -50,6 +50,7 @@ const sendDataToServer = async (
         grade,
         studentGitHub,
         studentRepo,
+        topic: TOPIC,
       })
       .then((response) => console.log("Sent Data Successfully"));
   } catch (error) {
